@@ -1,0 +1,5 @@
+MP4 Smells.txt
+
+1) In line 558 of hudson.modal.UpdateCenter, the code on the right hand side of the equals sign could be extracted and placed into the subsequent conditional, removing the need to have the line of code on 558.  This should be done because it is redundant code, we can create the variable needed for the conditional and the conditional in the same line.
+
+2) Z

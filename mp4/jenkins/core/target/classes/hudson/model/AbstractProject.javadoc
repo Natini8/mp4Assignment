@@ -1,3 +1,0 @@
-#Thu Mar 29 14:07:53 EDT 2018
-isConcurrentBuild=\ Does this project perform concurrent builds?\n @since 1.319\n
-getDownstreamProjects=\ Gets the other {@link AbstractProject}s that should be built\n when a build of this project is completed.\n

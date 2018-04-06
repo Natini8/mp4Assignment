@@ -6,4 +6,4 @@ MP4 Smells Questions
 
 4) Because there is a code snippet that is copied 3 times (4 times total) sequentially, a for loop is an ideal solution for fixing this code smell.
 
-6) 
+6) There was a 13 line segment repeated inside both Computer.java and Job.java.  We ended up making a superclass out of these copied code segments called RSSFunctions.

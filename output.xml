@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+   <duplication lines="35" tokens="192">
+      <file line="27"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/jenkins/mvn/FilePathGlobalSettingsProvider.java"/>
+      <file line="26"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/jenkins/mvn/FilePathSettingsProvider.java"/>
+      <codefragment><![CDATA[    public FilePathGlobalSettingsProvider(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    @Override
+    public FilePath supplySettings(AbstractBuild<?, ?> build, TaskListener listener) {
+        if (StringUtils.isEmpty(path)) {
+            return null;
+        }
+
+        try {
+            EnvVars env = build.getEnvironment(listener);
+            String targetPath = Util.replaceMacro(this.path, build.getBuildVariableResolver());
+            targetPath = env.expand(targetPath);
+
+            if (IOUtils.isAbsolute(targetPath)) {
+                return new FilePath(new File(targetPath));
+            } else {
+                FilePath mrSettings = build.getModuleRoot().child(targetPath);
+                FilePath wsSettings = build.getWorkspace().child(targetPath);
+                try {
+                    if (!wsSettings.exists() && mrSettings.exists()) {
+                        wsSettings = mrSettings;
+                    }
+                } catch (Exception e) {
+                    throw new IllegalStateException("failed to find settings.xml at: " + wsSettings.getRemote());
+                }
+                return wsSettings;
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("failed to prepare global settings.xml");]]></codefragment>
+   </duplication>
+   <duplication lines="20" tokens="169">
+      <file line="99"
+            path="/home/natini/Desktop/mp4Assignment/core/src/test/java/hudson/scheduler/CronTabTest.java"/>
+      <file line="121"
+            path="/home/natini/Desktop/mp4Assignment/core/src/test/java/hudson/scheduler/CronTabTest.java"/>
+      <codefragment><![CDATA[        final Calendar cal = Calendar.getInstance(new Locale("de", "de"));
+        cal.set(2011, 0, 16, 0, 0, 0); // Sunday, Jan 16th 2011, 00:00
+        final String cronStr = "0 23 * * 1-5"; // execute on weekdays @23:00
+
+        final CronTab cron = new CronTab(cronStr);
+        final Calendar next = cron.ceil(cal);
+
+        final Calendar expectedDate = Calendar.getInstance();
+        expectedDate.set(2011, 0, 17, 23, 0, 0); // Expected next: Monday, Jan 17th 2011, 23:00
+        assertEquals(expectedDate.get(Calendar.HOUR), next.get(Calendar.HOUR));
+        assertEquals(expectedDate.get(Calendar.MINUTE), next.get(Calendar.MINUTE));
+        assertEquals(expectedDate.get(Calendar.YEAR), next.get(Calendar.YEAR));
+        assertEquals(expectedDate.get(Calendar.MONTH), next.get(Calendar.MONTH));
+        assertEquals(expectedDate.get(Calendar.DAY_OF_MONTH), next.get(Calendar.DAY_OF_MONTH)); // FAILS: is Monday, Jan 10th, 23:00
+    }
+
+    /**
+     * Verifies that HUDSON-8656 never crops up again.
+     */
+    @Url("http://issues.hudson-ci.org/browse/HUDSON-8656")]]></codefragment>
+   </duplication>
+   <duplication lines="11" tokens="158">
+      <file line="11"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/HMACConfidentialKeyTest.java"/>
+      <file line="11"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/CryptoConfidentialKeyTest.java"/>
+      <codefragment><![CDATA[  extends java.lang.Object  implements
+    groovy.lang.GroovyObject {
+@org.junit.Rule() public ConfidentialStoreRule store;
+public  groovy.lang.MetaClass getMetaClass() { return (groovy.lang.MetaClass)null;}
+public  void setMetaClass(groovy.lang.MetaClass mc) { }
+public  java.lang.Object invokeMethod(java.lang.String method, java.lang.Object arguments) { return null;}
+public  java.lang.Object getProperty(java.lang.String property) { return null;}
+public  void setProperty(java.lang.String property, java.lang.Object value) { }
+public  java.lang.Object getKey() { return null;}
+public  void setKey(java.lang.Object value) { }
+@org.junit.Test() public  void basics() { }]]></codefragment>
+   </duplication>
+   <duplication lines="34" tokens="153">
+      <file line="36"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/hudson/util/ForkOutputStream.java"/>
+      <file line="35"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/hudson/util/DualOutputStream.java"/>
+      <codefragment><![CDATA[    public ForkOutputStream(OutputStream lhs, OutputStream rhs) {
+        this.lhs = lhs;
+        this.rhs = rhs;
+    }
+
+    public void write(int b) throws IOException {
+        lhs.write(b);
+        rhs.write(b);
+    }
+
+    @Override
+    public void write(byte[] b) throws IOException {
+        lhs.write(b);
+        rhs.write(b);
+    }
+
+    @Override
+    public void write(byte[] b, int off, int len) throws IOException {
+        lhs.write(b, off, len);
+        rhs.write(b, off, len);
+    }
+
+    @Override
+    public void flush() throws IOException {
+        lhs.flush();
+        rhs.flush();
+    }
+
+    @Override
+    public void close() throws IOException {
+        lhs.close();
+        rhs.close();
+    }
+}]]></codefragment>
+   </duplication>
+   <duplication lines="30" tokens="150">
+      <file line="112"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-sources/antlr/hudson/model/labels/LabelExpressionLexer.java"/>
+      <file line="169"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-sources/antlr/hudson/scheduler/CrontabLexer.java"/>
+      <codefragment><![CDATA[						mATOM(true);
+						theRetToken=_returnToken;
+					}
+				else {
+					if (LA(1)==EOF_CHAR) {uponEOF(); _returnToken = makeToken(Token.EOF_TYPE);}
+				else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
+				}
+				}
+				if ( _returnToken==null ) continue tryAgain; // found SKIP token
+				_ttype = _returnToken.getType();
+				_ttype = testLiteralsTable(_ttype);
+				_returnToken.setType(_ttype);
+				return _returnToken;
+			}
+			catch (RecognitionException e) {
+				throw new TokenStreamRecognitionException(e);
+			}
+		}
+		catch (CharStreamException cse) {
+			if ( cse instanceof CharStreamIOException ) {
+				throw new TokenStreamIOException(((CharStreamIOException)cse).io);
+			}
+			else {
+				throw new TokenStreamException(cse.getMessage());
+			}
+		}
+	}
+}
+
+	public final void mAND(boolean _createToken) throws RecognitionException, CharStreamException, TokenStreamException {]]></codefragment>
+   </duplication>
+   <duplication lines="8" tokens="122">
+      <file line="11"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/HMACConfidentialKeyTest.java"/>
+      <file line="11"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/CryptoConfidentialKeyTest.java"/>
+      <file line="11"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/HexStringConfidentialKeyTest.java"/>
+      <codefragment><![CDATA[  extends java.lang.Object  implements
+    groovy.lang.GroovyObject {
+@org.junit.Rule() public ConfidentialStoreRule store;
+public  groovy.lang.MetaClass getMetaClass() { return (groovy.lang.MetaClass)null;}
+public  void setMetaClass(groovy.lang.MetaClass mc) { }
+public  java.lang.Object invokeMethod(java.lang.String method, java.lang.Object arguments) { return null;}
+public  java.lang.Object getProperty(java.lang.String property) { return null;}
+public  void setProperty(java.lang.String property, java.lang.Object value) { }]]></codefragment>
+   </duplication>
+   <duplication lines="8" tokens="117">
+      <file line="11"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/util/AtmostOneTaskExecutorTest.java"/>
+      <file line="11"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/DefaultConfidentialStoreTest.java"/>
+      <codefragment><![CDATA[  extends java.lang.Object  implements
+    groovy.lang.GroovyObject {
+public  groovy.lang.MetaClass getMetaClass() { return (groovy.lang.MetaClass)null;}
+public  void setMetaClass(groovy.lang.MetaClass mc) { }
+public  java.lang.Object invokeMethod(java.lang.String method, java.lang.Object arguments) { return null;}
+public  java.lang.Object getProperty(java.lang.String property) { return null;}
+public  void setProperty(java.lang.String property, java.lang.Object value) { }
+public  java.lang.Object getCounter() { return null;}]]></codefragment>
+   </duplication>
+   <duplication lines="8" tokens="112">
+      <file line="26"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/hudson/util/SecretTest.java"/>
+      <file line="11"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/util/AtmostOneTaskExecutorTest.java"/>
+      <file line="11"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/DefaultConfidentialStoreTest.java"/>
+      <codefragment><![CDATA[  extends java.lang.Object  implements
+    groovy.lang.GroovyObject {
+public  groovy.lang.MetaClass getMetaClass() { return (groovy.lang.MetaClass)null;}
+public  void setMetaClass(groovy.lang.MetaClass mc) { }
+public  java.lang.Object invokeMethod(java.lang.String method, java.lang.Object arguments) { return null;}
+public  java.lang.Object getProperty(java.lang.String property) { return null;}
+public  void setProperty(java.lang.String property, java.lang.Object value) { }
+public  hudson.util.Secret getPassword() { return (hudson.util.Secret)null;}]]></codefragment>
+   </duplication>
+   <duplication lines="13" tokens="111">
+      <file line="1240"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/hudson/model/Computer.java"/>
+      <file line="1459"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/hudson/model/Job.java"/>
+      <codefragment><![CDATA[    public void doRssAll( StaplerRequest req, StaplerResponse rsp ) throws IOException, ServletException {
+        rss(req, rsp, " all builds", getBuilds());
+    }
+
+    public void doRssFailed(StaplerRequest req, StaplerResponse rsp ) throws IOException, ServletException {
+        rss(req, rsp, " failed builds", getBuilds().failureOnly());
+    }
+    private void rss(StaplerRequest req, StaplerResponse rsp, String suffix, RunList runs) throws IOException, ServletException {
+        RSS.forwardToRss(getDisplayName() + suffix, getUrl(),
+                runs.newBuilds(), Run.FEED_ADAPTER, req, rsp);
+    }
+
+    @RequirePOST]]></codefragment>
+   </duplication>
+   <duplication lines="32" tokens="110">
+      <file line="214"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/jenkins/model/lazy/BuildReferenceMapAdapter.java"/>
+      <file line="319"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/jenkins/model/lazy/BuildReferenceMapAdapter.java"/>
+      <codefragment><![CDATA[            for (R r : c) {
+                b |= add(r);
+            }
+            return b;
+        }
+
+        public boolean removeAll(Collection<?> c) {
+            boolean b=false;
+            for (Object o : c) {
+                b|=remove(o);
+            }
+            return b;
+        }
+
+        public boolean retainAll(Collection<?> c) {
+            // TODO: to properly pass this onto core, we need to wrap o into BuildReference but also needs to figure out ID.
+            throw new UnsupportedOperationException();
+        }
+
+        public void clear() {
+            core.clear();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return core.equals(o);
+        }
+
+        @Override
+        public int hashCode() {
+            return core.hashCode();
+        }]]></codefragment>
+   </duplication>
+   <duplication lines="6" tokens="108">
+      <file line="16"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/hudson/util/SecretRewriterTest.java"/>
+      <file line="15"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/hudson/util/SecretTest.java"/>
+      <file line="14"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/HexStringConfidentialKeyTest.java"/>
+      <codefragment><![CDATA[public  groovy.lang.MetaClass getMetaClass() { return (groovy.lang.MetaClass)null;}
+public  void setMetaClass(groovy.lang.MetaClass mc) { }
+public  java.lang.Object invokeMethod(java.lang.String method, java.lang.Object arguments) { return null;}
+public  java.lang.Object getProperty(java.lang.String property) { return null;}
+public  void setProperty(java.lang.String property, java.lang.Object value) { }
+@org.junit.Test() public  void singleFileRewrite() { }]]></codefragment>
+   </duplication>
+   <duplication lines="6" tokens="104">
+      <file line="13"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/util/AtmostOneTaskExecutorTest.java"/>
+      <file line="14"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/HMACConfidentialKeyTest.java"/>
+      <file line="14"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/CryptoConfidentialKeyTest.java"/>
+      <file line="13"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-test-sources/groovy-stubs/jenkins/security/DefaultConfidentialStoreTest.java"/>
+      <codefragment><![CDATA[public  groovy.lang.MetaClass getMetaClass() { return (groovy.lang.MetaClass)null;}
+public  void setMetaClass(groovy.lang.MetaClass mc) { }
+public  java.lang.Object invokeMethod(java.lang.String method, java.lang.Object arguments) { return null;}
+public  java.lang.Object getProperty(java.lang.String property) { return null;}
+public  void setProperty(java.lang.String property, java.lang.Object value) { }
+public  java.lang.Object getCounter() { return null;}]]></codefragment>
+   </duplication>
+   <duplication lines="31" tokens="104">
+      <file line="258"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/hudson/util/FormFieldValidator.java"/>
+      <file line="458"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/hudson/util/FormValidation.java"/>
+      <codefragment><![CDATA[        protected BufferedReader open(URL url) throws IOException {
+            // use HTTP content type to find out the charset.
+            URLConnection con = ProxyConfiguration.open(url);
+            if (con == null) { // TODO is this even permitted by URL.openConnection?
+                throw new IOException(url.toExternalForm());
+            }
+            return new BufferedReader(
+                new InputStreamReader(con.getInputStream(),getCharset(con)));
+        }
+
+        /**
+         * Finds the string literal from the given reader.
+         * @return
+         *      true if found, false otherwise.
+         */
+        protected boolean findText(BufferedReader in, String literal) throws IOException {
+            String line;
+            while((line=in.readLine())!=null)
+                if(line.indexOf(literal)!=-1)
+                    return true;
+            return false;
+        }
+
+        /**
+         * Calls the {@link #error(String)} method with a reasonable error message.
+         * Use this method when the {@link #open(URL)} or {@link #findText(BufferedReader, String)} fails.
+         *
+         * @param url
+         *      Pass in the URL that was connected. Used for error diagnosis.
+         */
+        protected void handleIOException(String url, IOException e) throws IOException, ServletException {]]></codefragment>
+   </duplication>
+   <duplication lines="18" tokens="103">
+      <file line="542"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/hudson/util/FormFieldValidator.java"/>
+      <file line="351"
+            path="/home/natini/Desktop/mp4Assignment/core/src/main/java/hudson/util/FormValidation.java"/>
+      <codefragment><![CDATA[                String path = EnvVars.masterEnvVars.get("PATH");
+                String tokenizedPath = "";
+                String delimiter = null;
+                if(path!=null) {
+                    for (String _dir : Util.tokenize(path.replace("\\", "\\\\"),File.pathSeparator)) {
+                        if (delimiter == null) {
+                          delimiter = ", ";
+                        }
+                        else {
+                          tokenizedPath += delimiter;
+                        }
+
+                        tokenizedPath += _dir.replace('\\', '/');
+                        
+                        File dir = new File(_dir);
+
+                        File f = new File(dir,exe);
+                        if(f.exists()) {]]></codefragment>
+   </duplication>
+   <duplication lines="6" tokens="101">
+      <file line="14"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-sources/groovy-stubs/hudson/util/LoadMonitorImpl.java"/>
+      <file line="14"
+            path="/home/natini/Desktop/mp4Assignment/core/target/generated-sources/groovy-stubs/jenkins/util/groovy/AbstractGroovyViewModule.java"/>
+      <codefragment><![CDATA[(java.io.File dataFile) {}
+public  groovy.lang.MetaClass getMetaClass() { return (groovy.lang.MetaClass)null;}
+public  void setMetaClass(groovy.lang.MetaClass mc) { }
+public  java.lang.Object invokeMethod(java.lang.String method, java.lang.Object arguments) { return null;}
+public  java.lang.Object getProperty(java.lang.String property) { return null;}
+public  void setProperty(java.lang.String property, java.lang.Object value) { }]]></codefragment>
+   </duplication>
+</pmd-cpd>

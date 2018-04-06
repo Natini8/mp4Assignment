@@ -35,7 +35,7 @@ import javax.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.Locale;
 
-/**
+;/**
  * The strategy to use for manipulating converting names (e.g. user names, group names, etc) into ids.
  *
  * @since 1.566
@@ -223,7 +223,7 @@ public abstract class IdStrategy extends AbstractDescribableImpl<IdStrategy> imp
                 return buf.toString();
             }
         }
-
+        
         @Override
         public String idFromFilename(@Nonnull String filename) {
             if (filename.matches("[a-z0-9_. -]+")) {

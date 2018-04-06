@@ -5,3 +5,5 @@ MP4 Smells Questions
 2) Again, the smell in this case was the duplicate code.  When extracting the method, we made sure to make the destination type 'Nodes'.
 
 3) Since this method would be useful in a location where more files can use it, we should move the code snippet to the 'Jenkins' class.  The Jenkins type has been transformed into a package as a result.
+
+

@@ -44,6 +44,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.security.AlgorithmParameterGenerator;
 import java.security.GeneralSecurityException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -52,6 +53,7 @@ import java.security.PublicKey;
 import java.security.Signature;
 import java.security.interfaces.DSAPublicKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidParameterSpecException;
 import java.security.spec.X509EncodedKeySpec;
 
 public class Connection {
@@ -154,8 +156,7 @@ public class Connection {
             paramGen.init(keySize);
 
             KeyPairGenerator dh = KeyPairGenerator.getInstance("DH");
-            dh.initialize(paramGen.generateParameters().getParameterSpec(DHParameterSpec.class));
-            keyPair = dh.generateKeyPair();
+            keyPair = generateKeyPairWithSpec(paramGen, dh);
 
             // send a half and get a half
             writeKey(keyPair.getPublic());
@@ -164,8 +165,7 @@ public class Connection {
             otherHalf = KeyFactory.getInstance("DH").generatePublic(readKey());
 
             KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("DH");
-            keyPairGen.initialize(((DHPublicKey) otherHalf).getParams());
-            keyPair = keyPairGen.generateKeyPair();
+            keyPair = generateKeyPairWithSpec(otherHalf, keyPairGen);
 
             // send a half and get a half
             writeKey(keyPair.getPublic());
@@ -177,6 +177,24 @@ public class Connection {
 
         return ka;
     }
+
+	public KeyPair generateKeyPairWithSpec(PublicKey otherHalf, KeyPairGenerator keyPairGen)
+			throws InvalidAlgorithmParameterException {
+		KeyPair keyPair;
+		KeyPairGenerator keyPairGen2 = keyPairGen;
+		keyPairGen2.initialize(((DHPublicKey) otherHalf).getParams());
+		keyPair = keyPairGen2.generateKeyPair();
+		return keyPair;
+	}
+
+	public KeyPair generateKeyPairWithSpec(AlgorithmParameterGenerator paramGen, KeyPairGenerator dh)
+			throws InvalidAlgorithmParameterException, InvalidParameterSpecException {
+		KeyPair keyPair;
+		KeyPairGenerator dh2 = dh;
+		dh2.initialize(paramGen.generateParameters().getParameterSpec(DHParameterSpec.class));
+		keyPair = dh2.generateKeyPair();
+		return keyPair;
+	}
 
     /**
      * Upgrades a connection with transport encryption by the specified symmetric cipher.

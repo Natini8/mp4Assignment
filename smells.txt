@@ -4,4 +4,6 @@ MP4 Smells Questions
 
 3) First, the smell in this case is duplicate code.  We first extracted the method into into the destination type 'Nodes'.  Since this method would be useful in a location where more files can use it, we should move the code snippet to the 'Jenkins' class.  The Jenkins type has been transformed into a package as a result.
 
-4) 
+4) Because there is a code snippet that is copied 3 times (4 times total) sequentially, a for loop is an ideal solution for fixing this code smell.
+
+6) 

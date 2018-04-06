@@ -2,13 +2,13 @@ package jenkins.model;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 //import jenkins.model.IdStrategy.CaseSensitive;
 
 public class IdStrategyTest {
 	
-	@Test
+	//@Test
 	public void stringInRegex() {
 		IdStrategy.CaseSensitive object = new IdStrategy.CaseSensitive();
 		String input = "abd";
@@ -17,7 +17,7 @@ public class IdStrategyTest {
 		assertEquals("abd", output);
 	}
 	
-	@Test
+	//@Test
 	public void stringNotInRegex() {
 		IdStrategy.CaseSensitive object = new IdStrategy.CaseSensitive();
 		String input = "\nok";
